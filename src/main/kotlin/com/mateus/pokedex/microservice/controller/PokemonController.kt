@@ -1,24 +1,25 @@
 package com.mateus.pokedex.microservice.controller
 
-import com.mateus.pokedex.microservice.helper.pokemonQuery.Companion.request
-import com.mateus.pokedex.microservice.helper.pokemonQuery.Companion.withLimit
-import com.mateus.pokedex.microservice.helper.pokemonQuery.Companion.withOffset
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
-import com.mateus.pokedex.microservice.helper.pokemonQuery
+import org.springframework.web.bind.annotation.RequestParam
+import com.mateus.pokedex.microservice.model.Pokemons
+import com.mateus.pokedex.microservice.service.PokemonService
+import jakarta.servlet.http.HttpServletResponse
+import org.springframework.http.ResponseEntity
 
 @RestController
 class PokemonController {
 
+    @GetMapping("/pokemons")
+    fun getPokemons(
+        @RequestParam(defaultValue = "") query: String,
+        @RequestParam(defaultValue = "") sort: String,
+        response: HttpServletResponse
+    ): ResponseEntity<List<Pokemons>> {
+        val data = PokemonService().getPokemonsByName(query, sort)
 
-    @GetMapping("/teste")
-    fun index(): String {
-        val data = pokemonQuery.createQuery()
-            .withLimit(3)
-            .withOffset(3)
-            .request()
-
-        return data
+        return ResponseEntity.ok(data)
     }
 
 }

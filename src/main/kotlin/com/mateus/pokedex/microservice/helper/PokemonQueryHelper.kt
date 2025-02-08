@@ -16,9 +16,8 @@ class pokemonQuery {
             return pokemonQuery(pokemonEndpoint)
         }
 
-        fun pokemonQuery.request(): String {
-            val data = HttpHelper.createRequest(this.queryUrl)
-            return data
+        fun pokemonQuery.getUrl(): String {
+            return this.queryUrl
         }
 
         fun pokemonQuery.withLimit(limit: Int): pokemonQuery {
