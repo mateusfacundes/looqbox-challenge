@@ -66,9 +66,9 @@ class PokemonService {
         var j: Int = 0
 
         while (i < leftHalf.size && j < rightHalf.size) {
-            var compare: Boolean = leftHalf[i].name!! <= rightHalf[j].name!!
+            var compare: Boolean = leftHalf[i].name <= rightHalf[j].name
             if (sortType == sortByLength) {
-                compare = leftHalf[i].name!!.length <= rightHalf[j].name!!.length
+                compare = leftHalf[i].name.length <= rightHalf[j].name.length
             }
             if (compare) {
                 results.add(leftHalf[i])
@@ -97,9 +97,7 @@ class PokemonService {
             return pokeList
         }
 
-        return pokeList.filter { pokemon ->
-            pokemon.name?.contains(query, ignoreCase = true) == true
-        }
+        return pokeList.filter { pokemon -> pokemon.name.contains(query, ignoreCase = true) }
     }
 
 }

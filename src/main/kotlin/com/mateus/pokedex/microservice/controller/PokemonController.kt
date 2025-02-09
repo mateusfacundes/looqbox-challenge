@@ -16,10 +16,28 @@ class PokemonController {
         @RequestParam(defaultValue = "") query: String,
         @RequestParam(defaultValue = "") sort: String,
         response: HttpServletResponse
-    ): ResponseEntity<List<Pokemons>> {
+    ): ResponseEntity<Map<String, List<String?>>> {
         val data = PokemonService().getPokemonsByName(query, sort)
 
-        return ResponseEntity.ok(data)
+        val pokemons = data.map { it.name }
+        val result = mapOf("result" to pokemons)
+
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/pokemons/highlight")
+    fun getPokemonsHighlight(
+        @RequestParam(defaultValue = "") query: String,
+        @RequestParam(defaultValue = "") sort: String,
+        response: HttpServletResponse
+    ): ResponseEntity<Map<String, List<Pokemons>>> {
+        val data = PokemonService().getPokemonsByName(query, sort)
+            .onEach { pokemon ->
+                pokemon.highlight = pokemon.getHighlight(query)
+            }
+
+        val result = mapOf("result" to data)
+        return ResponseEntity.ok(result)
     }
 
 }
