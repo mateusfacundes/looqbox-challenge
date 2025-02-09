@@ -15,7 +15,7 @@ The **PokeDex Microservice** is a lightweight and scalable REST API developed wi
 ### 1. Clone the Repository
 ```sh 
 git clone <REPOSITORY_URL>
-cd microservice
+cd looqbox-challenge
 ```
 
 ### 2. Build the Project

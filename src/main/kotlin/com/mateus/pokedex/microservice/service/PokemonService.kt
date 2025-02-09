@@ -5,21 +5,18 @@ import com.mateus.pokedex.microservice.helper.pokemonQuery.Companion.getUrl
 import com.mateus.pokedex.microservice.helper.pokemonQuery.Companion.withLimit
 import com.mateus.pokedex.microservice.model.PokemonApiResponse
 import com.mateus.pokedex.microservice.model.Pokemons
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.getForObject
+import com.mateus.pokedex.microservice.helper.CacheHelper
 
 
 @Service
 class PokemonService {
 
-    public constructor() {
-        this.restTemplate = RestTemplate()
-    }
+    private var restTemplate: RestTemplate = RestTemplate()
 
-    private lateinit var restTemplate: RestTemplate
-
+    private val cacheHelper = CacheHelper()
     private lateinit var pokemonsList: List<Pokemons>
 
     private var sortByAlphabetical = "alphabetical"
@@ -29,8 +26,18 @@ class PokemonService {
 
 
     fun getPokemons(url: String): PokemonApiResponse {
+        val cachedData = cacheHelper.loadFromCache()
+        if (cachedData != null) {
+            println("Ola eu com cache :)")
+            this.pokemonsList = cachedData.results
+            return cachedData
+        }
+        println("Ola eu sem cache :(")
+
         val data = this.restTemplate.getForObject<PokemonApiResponse>(url)
         this.pokemonsList = data.results
+        cacheHelper.saveToCache(data)
+
         return data
     }
 
