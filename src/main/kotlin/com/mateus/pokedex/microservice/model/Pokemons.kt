@@ -8,7 +8,7 @@ class Pokemons {
         if (query.isNullOrEmpty()){
             return this.name
         }
-        return this.name.replace(query, "<pre>" + query + "</pre>")
+        return this.name.replace(query, "<pre>$query</pre>")
     }
 
 }

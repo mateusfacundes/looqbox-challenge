@@ -22,6 +22,7 @@ cd looqbox-challenge
 If running locally without Docker:
 ```sh
 ./gradlew build
+./gradlew bootRun
 ```
 
 ### 3. Run with Docker
