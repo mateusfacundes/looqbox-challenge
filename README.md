@@ -43,7 +43,14 @@ docker run -p 8080:8080 pokedex-microservice
 | GET    | `/pokemons` | Lists Pokemon filtered by name and sorted                                     |
 | GET    | `/pokemons/highlight` | List of Pokemon with the searched part highlighted with filtering and sorting |
 
-### Query Parameters
+### Parameters
 - **query**: String, optional. If empty, lists all Pokemon from PokeAPI.
 - **sort**: String/Enum, optional. Defaults to alphabetical sorting if not provided.
 
+## Class diagram
+
+![alt text](class_diagram.png)
+
+## Flow diagram
+
+![alt text](flow_diagram.png)
