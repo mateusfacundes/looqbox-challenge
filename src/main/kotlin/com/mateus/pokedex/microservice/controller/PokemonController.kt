@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.ResponseEntity
 
 @RestController
-class PokemonController {
+class PokemonController (private val pokemonService: PokemonService) {
 
     @GetMapping("/pokemons")
     fun getPokemons(
@@ -17,7 +17,7 @@ class PokemonController {
         @RequestParam(defaultValue = "") sort: String,
         response: HttpServletResponse
     ): ResponseEntity<Map<String, List<String?>>> {
-        val data = PokemonService().getPokemonsByName(query, sort)
+        val data = pokemonService.getPokemonsByName(query, sort)
 
         val pokemons = data.map { it.name }
         val result = mapOf("result" to pokemons)
@@ -31,7 +31,7 @@ class PokemonController {
         @RequestParam(defaultValue = "") sort: String,
         response: HttpServletResponse
     ): ResponseEntity<Map<String, List<Pokemons>>> {
-        val data = PokemonService().getPokemonsByName(query, sort)
+        val data = pokemonService.getPokemonsByName(query, sort)
             .onEach { pokemon ->
                 pokemon.highlight = pokemon.getHighlight(query)
             }

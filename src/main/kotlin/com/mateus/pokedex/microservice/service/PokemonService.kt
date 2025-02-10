@@ -10,13 +10,13 @@ import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.getForObject
 import com.mateus.pokedex.microservice.helper.CacheHelper
 
-
 @Service
-class PokemonService {
+class PokemonService(
+    private val restTemplate: RestTemplate,
+    private val cacheHelper: CacheHelper
+) {
 
-    private var restTemplate: RestTemplate = RestTemplate()
 
-    private val cacheHelper = CacheHelper()
     private lateinit var pokemonsList: List<Pokemons>
 
     private var sortByAlphabetical = "alphabetical"
@@ -40,12 +40,10 @@ class PokemonService {
     }
 
     fun getPokemonsByName(name: String?, sort: String?): List<Pokemons> {
-        // TODO: Make cache logic
-        if (!::pokemonsList.isInitialized || pokemonsList.isEmpty()) {
-            // Using 1304 as limit to bring all pokemons
-            val url = PokemonQueryHelper.createQuery().withLimit(1304).getUrl()
-            this.getPokemons(url)
-        }
+
+        // Using 10000 as limit to bring all pokemons
+        val url = PokemonQueryHelper.createQuery().withLimit(10000).getUrl()
+        this.getPokemons(url)
 
         if (!sort.isNullOrEmpty() && sort in this.allowedSort) {
             this.sortType = sort

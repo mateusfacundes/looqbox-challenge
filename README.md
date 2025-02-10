@@ -45,7 +45,7 @@ docker run -p 8080:8080 pokedex-microservice
 
 ### Parameters
 - **query**: String, optional. If empty, lists all Pokemon from PokeAPI.
-- **sort**: String/Enum, optional. Defaults to alphabetical sorting if not provided.
+- **sort**: String. Defaults to alphabetical sorting if not provided. (accepts alphabetical and length as input) 
 
 ## Class diagram
 
