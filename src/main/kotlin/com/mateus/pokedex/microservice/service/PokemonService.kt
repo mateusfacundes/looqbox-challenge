@@ -1,8 +1,8 @@
 package com.mateus.pokedex.microservice.service
 
-import com.mateus.pokedex.microservice.helper.pokemonQuery
-import com.mateus.pokedex.microservice.helper.pokemonQuery.Companion.getUrl
-import com.mateus.pokedex.microservice.helper.pokemonQuery.Companion.withLimit
+import com.mateus.pokedex.microservice.helper.PokemonQueryHelper
+import com.mateus.pokedex.microservice.helper.PokemonQueryHelper.Companion.getUrl
+import com.mateus.pokedex.microservice.helper.PokemonQueryHelper.Companion.withLimit
 import com.mateus.pokedex.microservice.model.PokemonApiResponse
 import com.mateus.pokedex.microservice.model.Pokemons
 import org.springframework.stereotype.Service
@@ -28,11 +28,9 @@ class PokemonService {
     fun getPokemons(url: String): PokemonApiResponse {
         val cachedData = cacheHelper.loadFromCache()
         if (cachedData != null) {
-            println("Ola eu com cache :)")
             this.pokemonsList = cachedData.results
             return cachedData
         }
-        println("Ola eu sem cache :(")
 
         val data = this.restTemplate.getForObject<PokemonApiResponse>(url)
         this.pokemonsList = data.results
@@ -45,7 +43,7 @@ class PokemonService {
         // TODO: Make cache logic
         if (!::pokemonsList.isInitialized || pokemonsList.isEmpty()) {
             // Using 1304 as limit to bring all pokemons
-            val url = pokemonQuery.createQuery().withLimit(1304).getUrl()
+            val url = PokemonQueryHelper.createQuery().withLimit(1304).getUrl()
             this.getPokemons(url)
         }
 

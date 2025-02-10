@@ -1,6 +1,6 @@
 package com.mateus.pokedex.microservice.helper
 
-class pokemonQuery {
+class PokemonQueryHelper {
 
     private var queryUrl = ""
 
@@ -12,20 +12,20 @@ class pokemonQuery {
         private final val baseUrl = "https://pokeapi.co/api/v2/"
         private val pokemonEndpoint = baseUrl + "pokemon?"
 
-        fun createQuery(): pokemonQuery {
-            return pokemonQuery(pokemonEndpoint)
+        fun createQuery(): PokemonQueryHelper {
+            return PokemonQueryHelper(pokemonEndpoint)
         }
 
-        fun pokemonQuery.getUrl(): String {
+        fun PokemonQueryHelper.getUrl(): String {
             return this.queryUrl
         }
 
-        fun pokemonQuery.withLimit(limit: Int): pokemonQuery {
+        fun PokemonQueryHelper.withLimit(limit: Int): PokemonQueryHelper {
             this.queryUrl += "limit=$limit&"
             return this
         }
 
-        fun pokemonQuery.withOffset(offset: Int): pokemonQuery {
+        fun PokemonQueryHelper.withOffset(offset: Int): PokemonQueryHelper {
             this.queryUrl += "?offset=$offset&"
             return this
         }
