@@ -1,17 +1,22 @@
-FROM eclipse-temurin:17-jdk-jammy AS builder
+FROM gradle:7.6.1-jdk17 AS builder
 
 WORKDIR /app
 
-COPY . .
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle.kts .
+COPY settings.gradle.kts .
 
-RUN ./gradlew build
+COPY src src
+
+RUN chmod +x ./gradlew
+RUN ./gradlew clean build
 
 FROM eclipse-temurin:17-jre-jammy
 
 WORKDIR /app
 
-COPY --from=builder /app/build/libs/microservice-*.jar app.jar
-
-EXPOSE 8080
+# Copy the jar from build stage
+COPY --from=builder /app/build/libs/*-SNAPSHOT.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
