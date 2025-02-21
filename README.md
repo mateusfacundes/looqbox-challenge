@@ -1,7 +1,7 @@
 # PokeDex Microservice
 
 ## Description
-The **PokeDex Microservice** is a lightweight and scalable REST API developed with **Spring Boot** and **Kotlin** for the looqbox backend challenge.
+The **PokeDex Microservice** is a lightweight and scalable REST API developed with **Spring Boot** and **Kotlin** for consuming the Pokémon API.
 
 ## Technologies Used
 - **Language**: Kotlin
@@ -15,7 +15,7 @@ The **PokeDex Microservice** is a lightweight and scalable REST API developed wi
 ### 1. Clone the Repository
 ```sh 
 git clone <REPOSITORY_URL>
-cd looqbox-challenge
+cd pokedex-microservice
 ```
 
 ### 2. Build the Project
